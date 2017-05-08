@@ -1,5 +1,7 @@
 package jsongraph
 
+import "encoding/json"
+
 // Metadata is free form information that can be associated with a graph, node, or edge.
 type Metadata map[string]string
 
@@ -28,4 +30,14 @@ type Edge struct {
 	Directed bool     `json:"directed"`
 	Relation string   `json:"relation,omitempty"`
 	Metadata Metadata `json:"metadata,omitempty"`
+}
+
+// ToJSON serializes the graph to JSON.
+func (g Graph) ToJSON() ([]byte, error) {
+	return json.Marshal(g)
+}
+
+// FromJSON loads a graph from the JSON.
+func (g Graph) FromJSON(data []byte) error {
+	return json.Unmarshal(data, &g)
 }
