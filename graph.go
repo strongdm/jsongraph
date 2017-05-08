@@ -7,10 +7,9 @@ type Metadata map[string]string
 
 // Graph is a set of nodes and edges. Graph is a json.Marshaler and a json.Unmarshaler.
 type Graph struct {
-	*base
 	Label     string   `json:"label,omitempty"`
 	GraphType string   `json:"graph_type,omitempty"`
-	Directed  bool     `json:"directed,omitempty"`
+	Directed  bool     `json:"directed"`
 	Metadata  Metadata `json:"metadata,omitempty"`
 	Nodes     []Node   `json:"nodes"`
 	Edges     []Edge   `json:"edges"`
@@ -18,7 +17,6 @@ type Graph struct {
 
 // Node is a point on a graph. Node is a json.Marshaler and a json.Unmarshaler.
 type Node struct {
-	*base
 	ID       string   `json:"id"`
 	Label    string   `json:"label,omitempty"`
 	NodeType string   `json:"node_type,omitempty"`
@@ -27,22 +25,21 @@ type Node struct {
 
 // Edge is a connection between two nodes. Edge is a json.Marshaler and a json.Unmarshaler.
 type Edge struct {
-	*base
 	SourceID string   `json:"source_id"`
 	TargetID string   `json:"target_id"`
+	Directed bool     `json:"directed"`
 	Relation string   `json:"relation,omitempty"`
-	Directed bool     `json:"directed,omitempty"`
 	Metadata Metadata `json:"metadata,omitempty"`
 }
 
 type base struct{}
 
 // MarshalJSON builds a JSON representation of the struct.
-func (b *base) MarshalJSON() ([]byte, error) {
-	return json.Marshal(b)
+func (g Graph) MarshalJSON() ([]byte, error) {
+	return json.Marshal(g)
 }
 
-// Unmarshal builds a JSON representation of the struct.
-func (b *base) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, b)
+// UnmarshalJSON builds a JSON representation of the struct.
+func (g Graph) UnmarshalJSON(data []byte) error {
+	return json.Unmarshal(data, &g)
 }
