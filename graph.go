@@ -5,7 +5,7 @@ type Metadata map[string]string
 
 // Graph is a set of nodes and edges. Graph is a json.Marshaler and a json.Unmarshaler.
 type Graph struct {
-	Name      string   `json:"name,omitempty"`
+	Label     string   `json:"label,omitempty"`
 	GraphType string   `json:"graph_type,omitempty"`
 	Directed  bool     `json:"directed"`
 	Metadata  Metadata `json:"metadata,omitempty"`
