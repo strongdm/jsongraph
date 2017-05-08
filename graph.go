@@ -1,13 +1,11 @@
 package jsongraph
 
-import "encoding/json"
-
 // Metadata is free form information that can be associated with a graph, node, or edge.
 type Metadata map[string]string
 
 // Graph is a set of nodes and edges. Graph is a json.Marshaler and a json.Unmarshaler.
 type Graph struct {
-	Label     string   `json:"label,omitempty"`
+	Name      string   `json:"name,omitempty"`
 	GraphType string   `json:"graph_type,omitempty"`
 	Directed  bool     `json:"directed"`
 	Metadata  Metadata `json:"metadata,omitempty"`
@@ -30,16 +28,4 @@ type Edge struct {
 	Directed bool     `json:"directed"`
 	Relation string   `json:"relation,omitempty"`
 	Metadata Metadata `json:"metadata,omitempty"`
-}
-
-type base struct{}
-
-// MarshalJSON builds a JSON representation of the struct.
-func (g Graph) MarshalJSON() ([]byte, error) {
-	return json.Marshal(g)
-}
-
-// UnmarshalJSON builds a JSON representation of the struct.
-func (g Graph) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, &g)
 }
