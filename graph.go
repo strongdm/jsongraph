@@ -34,7 +34,7 @@ type Edge struct {
 
 // ToJSON serializes the graph to JSON.
 func (g Graph) ToJSON() ([]byte, error) {
-	return json.Marshal(g)
+	return json.MarshalIndent(g, "", "\t")
 }
 
 // FromJSON loads a graph from the JSON.

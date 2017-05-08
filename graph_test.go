@@ -7,7 +7,7 @@ import (
 
 func TestMarshalling(t *testing.T) {
 	graph := Graph{
-		Name: "Test Graph",
+		Label: "Test Graph",
 	}
 
 	node1 := Node{ID: "Node #1"}
@@ -34,7 +34,7 @@ func TestMarshalling(t *testing.T) {
 		t.Fail()
 	}
 
-	expected := `{"name":"Test Graph","directed":false,"nodes":[{"id":"Node #1"},{"id":"Node #2"},{"id":"Node #3"},{"id":"Node #4"}],"edges":[{"source_id":"Node #1","target_id":"Node #2","directed":false},{"source_id":"Node #2","target_id":"Node #3","directed":false},{"source_id":"Node #2","target_id":"Node #4","directed":false}]}`
+	expected := `{"label":"Test Graph","directed":false,"nodes":[{"id":"Node #1"},{"id":"Node #2"},{"id":"Node #3"},{"id":"Node #4"}],"edges":[{"source_id":"Node #1","target_id":"Node #2","directed":false},{"source_id":"Node #2","target_id":"Node #3","directed":false},{"source_id":"Node #2","target_id":"Node #4","directed":false}]}`
 	if string(b) != expected {
 		t.Logf("JSON was not what was expected.\n\nExpected: %s\nActual: %s", expected, string(b))
 		t.Fail()
