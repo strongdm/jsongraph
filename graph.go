@@ -32,10 +32,16 @@ type Edge struct {
 
 // ToJSON serializes the graph to JSON.
 func (g Graph) ToJSON() ([]byte, error) {
-	return json.MarshalIndent(g, "", "\t")
+	return json.MarshalIndent(map[string]interface{}{"graph": g}, "", "\t")
 }
 
 // FromJSON loads a graph from the JSON.
-func (g Graph) FromJSON(data []byte) error {
-	return json.Unmarshal(data, &g)
+func FromJSON(data []byte) (*Graph, error) {
+	temp := make(map[string]interface{})
+	err := json.Unmarshal(data, &temp)
+	if err != nil {
+		return nil, err
+	}
+
+	return temp["graph"].(*Graph), nil
 }

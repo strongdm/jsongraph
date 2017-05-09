@@ -1,7 +1,7 @@
 package jsongraph
 
 import (
-	"encoding/json"
+	"strings"
 	"testing"
 )
 
@@ -28,14 +28,52 @@ func TestMarshalling(t *testing.T) {
 	graph.Edges = append(graph.Edges, edge23)
 	graph.Edges = append(graph.Edges, edge24)
 
-	b, err := json.Marshal(&graph)
+	b, err := graph.ToJSON()
 	if err != nil {
 		t.Log("Marshalling error")
 		t.Fail()
 	}
 
-	expected := `{"label":"Test Graph","directed":false,"nodes":[{"id":"Node #1"},{"id":"Node #2"},{"id":"Node #3"},{"id":"Node #4"}],"edges":[{"source":"Node #1","target":"Node #2","directed":false},{"source":"Node #2","target":"Node #3","directed":false},{"source":"Node #2","target":"Node #4","directed":false}]}`
-	if string(b) != expected {
+	expected := `
+{
+	"graph": {
+		"label": "Test Graph",
+		"directed": false,
+		"nodes": [
+			{
+				"id": "Node #1"
+			},
+			{
+				"id": "Node #2"
+			},
+			{
+				"id": "Node #3"
+			},
+			{
+				"id": "Node #4"
+			}
+		],
+		"edges": [
+			{
+				"source": "Node #1",
+				"target": "Node #2",
+				"directed": false
+			},
+			{
+				"source": "Node #2",
+				"target": "Node #3",
+				"directed": false
+			},
+			{
+				"source": "Node #2",
+				"target": "Node #4",
+				"directed": false
+			}
+		]
+	}
+}`
+
+	if string(b) != strings.TrimSpace(expected) {
 		t.Logf("JSON was not what was expected.\n\nExpected: %s\nActual: %s", expected, string(b))
 		t.Fail()
 	}
